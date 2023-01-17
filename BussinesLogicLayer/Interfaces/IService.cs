@@ -10,5 +10,6 @@ namespace BussinesLogicLayer.Interfaces
     public interface IService<TEntity> where TEntity : MyDto
     {
         public bool Create(TEntity entity);
+        public List<TEntity> GetAll();
     }
 }

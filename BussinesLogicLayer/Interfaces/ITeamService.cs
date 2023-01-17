@@ -9,5 +9,6 @@ namespace BussinesLogicLayer.Interfaces
 {
     public interface ITeamService : IService<TeamDto>
     {
+        public List<TeamDto> GetTeamsForGroup(int groupId);
     }
 }

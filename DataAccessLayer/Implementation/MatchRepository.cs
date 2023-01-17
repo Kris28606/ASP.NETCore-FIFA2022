@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Interfaces;
 using Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,15 @@ namespace DataAccessLayer.Implementation
         {
             this.context = context;
         }
+
+        public void Create(Match entity)
+        {
+            context.Matches.Add(entity);
+        }
+
         public List<Match> GetAll()
         {
-            throw new NotImplementedException();
+            return context.Matches.Include(m => m.Team1).Include(m => m.Team2).Include(m => m.Team2.Group).Include(m => m.Team1.Group).OrderByDescending(m => m.DateTime).ToList();
         }
     }
 }

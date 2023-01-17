@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class Team
+    public enum Continent
+    {
+        Afrika,
+        Evropa,
+        Azija,
+        Severna_Amerika,
+        Juzna_Amerika,
+        Okeanija,
+        Australija
+    }
+    public class Team : MyEntity
     {
         public int TeamId { get; set; }
         public string Name { get; set; }
-        public string Continent { get; set; }
+        public Continent Continent { get; set; }
         public int Played { get; set; }
         public int Won { get; set; }
         public int Lost { get; set; }
@@ -19,6 +29,9 @@ namespace Domain
         public int GoalDifference { get; set; }
         public bool Pass { get; set; }
         public int Points { get; set; }
+        public string Flag { get; set; }
+        public int? GroupId { get; set; }
+        public Group Group { get; set; }
         [JsonIgnore]
         public List<Match> FirstTeams { get; set; }
         [JsonIgnore]

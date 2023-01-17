@@ -14,7 +14,7 @@ namespace Domain
         NotPlayedYet
     }
 
-    public class Match
+    public class Match : MyEntity
     {
         public int MatchId { get; set; }
         public Team Team1 { get; set; }
@@ -24,6 +24,7 @@ namespace Domain
         public int Team1Goals { get; set; }
         public int Team2Goals { get; set; }
         public DateTime DateTime { get; set; }
+        public String Stadium { get; set; }
         public MatchStatus Status { get; set; }
 
     }

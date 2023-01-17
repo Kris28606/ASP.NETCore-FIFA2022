@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public interface GroupDto : MyDto
+    public class GroupDto : MyDto
     {
+        public int GroupId { get; set; }
+        public String Name { get; set; }
+        public List<TeamDto> Teams{ get; set; }
     }
 }

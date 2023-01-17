@@ -9,5 +9,6 @@ namespace DataAccessLayer.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         public List<TEntity> GetAll();
+        public void Create(TEntity entity);
     }
 }

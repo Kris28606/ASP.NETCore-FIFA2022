@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Domain.Migrations
 {
     [DbContext(typeof(FifaContext))]
-    [Migration("20221127130828_Initial")]
+    [Migration("20221201182913_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -37,27 +37,7 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Team1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Team2Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Team3Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Team4Id")
-                        .HasColumnType("int");
-
                     b.HasKey("GroupId");
-
-                    b.HasIndex("Team1Id");
-
-                    b.HasIndex("Team2Id");
-
-                    b.HasIndex("Team3Id");
-
-                    b.HasIndex("Team4Id");
 
                     b.ToTable("Groups");
                 });
@@ -105,14 +85,21 @@ namespace Domain.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeamId"));
 
-                    b.Property<string>("Continent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Continent")
+                        .HasColumnType("int");
 
                     b.Property<int>("Drawn")
                         .HasColumnType("int");
 
+                    b.Property<string>("Flag")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("GoalDifference")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GroupId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int>("Lost")
@@ -136,42 +123,9 @@ namespace Domain.Migrations
 
                     b.HasKey("TeamId");
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("Teams");
-                });
-
-            modelBuilder.Entity("Domain.Group", b =>
-                {
-                    b.HasOne("Domain.Team", "Team1")
-                        .WithMany()
-                        .HasForeignKey("Team1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Team", "Team2")
-                        .WithMany()
-                        .HasForeignKey("Team2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Team", "Team3")
-                        .WithMany()
-                        .HasForeignKey("Team3Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Team", "Team4")
-                        .WithMany()
-                        .HasForeignKey("Team4Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Team1");
-
-                    b.Navigation("Team2");
-
-                    b.Navigation("Team3");
-
-                    b.Navigation("Team4");
                 });
 
             modelBuilder.Entity("Domain.Match", b =>
@@ -191,6 +145,22 @@ namespace Domain.Migrations
                     b.Navigation("Team1");
 
                     b.Navigation("Team2");
+                });
+
+            modelBuilder.Entity("Domain.Team", b =>
+                {
+                    b.HasOne("Domain.Group", "Group")
+                        .WithMany("Teams")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+                });
+
+            modelBuilder.Entity("Domain.Group", b =>
+                {
+                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("Domain.Team", b =>
